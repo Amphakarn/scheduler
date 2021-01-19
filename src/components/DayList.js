@@ -4,7 +4,7 @@ import DayListItem from "components/DayListItem";
 
 export default function DayList(props) {
 
-  const newArrDays = props.days.map(day => {
+  const arrDays = props.days.map(day => {
 
     return (
       <ul>
@@ -18,5 +18,5 @@ export default function DayList(props) {
       </ul>
     );
   });
-  return newArrDays
+  return arrDays
 };
