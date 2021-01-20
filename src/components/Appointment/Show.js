@@ -1,5 +1,4 @@
 import React from "react";
-// import InterviewerListItem from "components/InterviewerListItem";
 
 export default function Show(props) {
   console.log("***PROPS for show = ", props)
