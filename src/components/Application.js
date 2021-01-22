@@ -4,68 +4,87 @@ import axios from "axios";
 import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
+import { getAppointmentsForDay } from "helpers/selectors";
 
 
-const appointments = [
-  {
-    id: 1,
-    time: "12pm",
-  },
-  {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer: {
-        id: 1,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-  {
-    id: 3,
-    time: "2pm",
-  },
-  {
-    id: 4,
-    time: "3pm",
-    interview: {
-      student: "Leo Messi",
-      interviewer: {
-        id: 3,
-        name: "Mildred Nazir",
-        avatar: "https://i.imgur.com/T2WwVfS.png",
-      }
-    }
-  },
-  {
-    id: 5,
-    time: "4pm",
-    interview: {
-      student: "Cristiano Ronaldo",
-      interviewer: {
-        id: 5,
-        name: "Sven Jones",
-        avatar: "https://i.imgur.com/twYrpay.jpg",
-      }
-    }
-  }
-];
+// const appointments = [
+//   {
+//     id: 1,
+//     time: "12pm",
+//   },
+//   {
+//     id: 2,
+//     time: "1pm",
+//     interview: {
+//       student: "Lydia Miller-Jones",
+//       interviewer: {
+//         id: 1,
+//         name: "Sylvia Palmer",
+//         avatar: "https://i.imgur.com/LpaY82x.png",
+//       }
+//     }
+//   },
+//   {
+//     id: 3,
+//     time: "2pm",
+//   },
+//   {
+//     id: 4,
+//     time: "3pm",
+//     interview: {
+//       student: "Leo Messi",
+//       interviewer: {
+//         id: 3,
+//         name: "Mildred Nazir",
+//         avatar: "https://i.imgur.com/T2WwVfS.png",
+//       }
+//     }
+//   },
+//   {
+//     id: 5,
+//     time: "4pm",
+//     interview: {
+//       student: "Cristiano Ronaldo",
+//       interviewer: {
+//         id: 5,
+//         name: "Sven Jones",
+//         avatar: "https://i.imgur.com/twYrpay.jpg",
+//       }
+//     }
+//   }
+// ];
+
 
 
 export default function Application(props) {
 
-  const [day, setDay] = useState("Monday");
-  const [days, setDays] = useState([]);
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    appointments: {},
+    interviewers: {}
+  });
+  const setDay = day => setState({ ...state, day });
+  const setDays = days => setState((prev) => ({ ...prev, days }));
+  const setAppointments = appointments => setState((prev) => ({ ...prev, appointments }));
 
   useEffect(() => {
-    axios.get("http://localhost:8001/api/days")
-      .then(response => {
-        // console.log("*****RESPONSE = ", response);
-        setDays([...response.data])
+    Promise.all([
+      axios.get("/api/days"),
+      axios.get("/api/appointments")
+    ])
+      .then((response) => {
+        setDays(response[0].data);
+        setAppointments(response[1].data);
       })
-  }, [])
+  }, []);
+
+  getAppointmentsForDay(state, state.day);
+
+  // const state = { day: "Monday", days: [], appointments: {}, interviewers: {} } 
+  // const state = { day: "Monday", days: [{}, {}, {}, {}, {}], appointments: {}, interviewers: {} } 
+  // const state = { day: "Monday", days: [{}, {}, {}, {}, {}], appointments: { 1, 2, 3, 4, 5}, interviewers: {} }
+
 
   return (
     <main className="layout">
@@ -77,11 +96,11 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList
-            days={days}
-            day={day}
+          {state.days.length && <DayList
+            days={state.days}
+            day={state.day}
             setDay={setDay}
-          />
+          />}
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
@@ -90,10 +109,10 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {appointments.map(appointment => {
+        {state.appointments.length && state.appointments.map(appointment => {
           return <Appointment
-            key={appointment.id}
-            {...appointment}
+            key={state.appointment.id}
+            {...state.appointment}
           />
         })}
         <Appointment key="last" time="5pm" />
