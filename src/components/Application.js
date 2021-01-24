@@ -6,6 +6,7 @@ import DayList from "components/DayList";
 import Appointment from "components/Appointment";
 import { getAppointmentsForDay } from "helpers/selectors";
 import { getInterview } from "helpers/selectors";
+import { getInterviewersForDay } from "helpers/selectors";
 
 
 
@@ -17,6 +18,11 @@ export default function Application(props) {
     appointments: {},
     interviewers: {}
   });
+
+  const bookInterview = (id, interview) => {
+    console.log(id, interview);
+  }
+
   const setDay = day => setState({ ...state, day });
   // const setDays = days => setState((prev) => ({ ...prev, days }));
   // const setAppointments = appointments => setState((prev) => ({ ...prev, appointments }));
@@ -43,11 +49,14 @@ export default function Application(props) {
   const dailyAppointments = getAppointmentsForDay(state, state.day).map(appointment => {
     // console.log("APPOINTMENT.interview = ", appointment.interview)
     const interview = getInterview(state, appointment.interview);
+    const interviewers = getInterviewersForDay(state, state.day);
+    // console.log("interviewers = ", interviewers);
 
     return (<Appointment
       key={appointment.id}
       { ...appointment }
       interview={interview}
+      interviewers={interviewers}
     />)
   })
 
