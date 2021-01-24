@@ -19,7 +19,7 @@ export default function Application(props) {
     appointments: {},
     interviewers: {}
   });
-  // console.log("STATE = ", state)
+  console.log("PREV STATE = ", state)
 
   const setDay = day => setState({ ...state, day });
   // const setDays = days => setState((prev) => ({ ...prev, days }));
@@ -43,6 +43,7 @@ export default function Application(props) {
 
   // Book a new appointment
   const bookInterview = (id, interview) => {
+
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -54,9 +55,19 @@ export default function Application(props) {
       [id]: appointment
     };
 
-    setState({ ...state, appointments });
+    // setState({ ...state, appointments });
 
-    console.log("***bookInterview =", id, interview);
+    return axios.put(`/api/appointments/${id}`, { interview })
+      .then((response) => {
+        setState((prev) => ({ 
+          ...prev, 
+          appointments 
+        }));
+        console.log("RESPONSE from PUT request: ", response);
+        console.log("UPDATED STATE: ", state);
+      });
+
+    // console.log("***bookInterview =", id, interview);
   }
 
 
