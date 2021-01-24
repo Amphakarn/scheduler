@@ -4,10 +4,11 @@ import axios from "axios";
 import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
-import { getAppointmentsForDay } from "helpers/selectors";
-import { getInterview } from "helpers/selectors";
-import { getInterviewersForDay } from "helpers/selectors";
-
+import {
+  getAppointmentsForDay,
+  getInterviewersForDay,
+  getInterview
+} from "../helpers/selectors";
 
 
 export default function Application(props) {
@@ -18,10 +19,7 @@ export default function Application(props) {
     appointments: {},
     interviewers: {}
   });
-
-  const bookInterview = (id, interview) => {
-    console.log(id, interview);
-  }
+  // console.log("STATE = ", state)
 
   const setDay = day => setState({ ...state, day });
   // const setDays = days => setState((prev) => ({ ...prev, days }));
@@ -34,31 +32,52 @@ export default function Application(props) {
       axios.get("/api/interviewers")
     ])
       .then((response) => {
-        // console.log("***RESPONSE = ", response)
-
-        // setDays(response[0].data);
-        // setAppointments(response[1].data);
         setState(prev => ({
-          ...prev, days: response[0].data,
-                   appointments: response[1].data,
-                   interviewers: response[2].data
+          ...prev,
+          days: response[0].data,
+          appointments: response[1].data,
+          interviewers: response[2].data
         }));
       })
   }, []);
 
-  const dailyAppointments = getAppointmentsForDay(state, state.day).map(appointment => {
-    // console.log("APPOINTMENT.interview = ", appointment.interview)
-    const interview = getInterview(state, appointment.interview);
-    const interviewers = getInterviewersForDay(state, state.day);
-    // console.log("interviewers = ", interviewers);
+  // Book a new appointment
+  const bookInterview = (id, interview) => {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
 
-    return (<Appointment
-      key={appointment.id}
-      { ...appointment }
-      interview={interview}
-      interviewers={interviewers}
-    />)
-  })
+    // Update the existing appointments object with new appointment with the matching appointment id
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    setState({ ...state, appointments });
+
+    console.log("***bookInterview =", id, interview);
+  }
+
+
+
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
+
+  const interviewers = getInterviewersForDay(state, state.day);
+
+  const appointment = dailyAppointments.map(appointment => {
+    const interview = getInterview(state, appointment.interview);
+
+    return (
+      <Appointment
+        key={appointment.id}
+        {...appointment}
+        interview={interview}
+        interviewers={interviewers}
+        bookInterview={bookInterview}
+      />
+    );
+  });
 
   return (
     <main className="layout">
@@ -84,7 +103,7 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {dailyAppointments}
+        {appointment}
         <Appointment key="last" time="5pm" />
       </section>
     </main>
