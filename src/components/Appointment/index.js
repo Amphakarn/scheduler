@@ -13,7 +13,7 @@ import Confirm from "components/Appointment/Confirm";
 
 export default function Appointment(props) {
 
-  // console.log("***PROPS for Appointment = ", props);
+  console.log("***PROPS for Appointment = ", props);
 
   // mode
   const EMPTY = "EMPTY";
@@ -32,16 +32,20 @@ export default function Appointment(props) {
   const onEdit = () => transition(CREATE);
   const onDelete = () => transition(CONFIRM);
 
+
   const save = (name, interviewer) => {
-    const interview = {
-      student: name,
-      interviewer,
-    };
-    transition(SAVING);
-    setTimeout(() => {
-      props.bookInterview(props.id, interview); //props.id --> appointment id
-      transition(SHOW);
-    }, 1000);
+    if (name && interviewer) {
+      const interview = {
+        student: name,
+        interviewer,
+      };
+      transition(SAVING);
+      props.bookInterview(props.id, interview) //props.id --> appointment id
+        .then(() => transition(SHOW))
+        .catch((err) => console.log(err));
+    } else {
+      alert("Please fill in information");
+    }
   }
 
 
@@ -61,7 +65,7 @@ export default function Appointment(props) {
       { mode === SHOW && (
         <Show
           student={props.interview.student} //correct
-          // interviewer={props.interview.interviewer.name} //correct
+          interviewer={props.interview.interviewer.name} //correct
           onEdit={onEdit}
           onDelete={onDelete}
         />
@@ -81,7 +85,7 @@ export default function Appointment(props) {
         <Confirm
           message={"Are you sure you would like to delete this interview?"}
           onCancel={back}
-          // onConfirm={}
+        // onConfirm={}
         />
       )}
 

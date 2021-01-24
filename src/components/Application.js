@@ -43,7 +43,7 @@ export default function Application(props) {
 
   // Book a new appointment
   const bookInterview = (id, interview) => {
-
+    // console.log("INTERVIEW = ", interview);
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -55,13 +55,11 @@ export default function Application(props) {
       [id]: appointment
     };
 
-    // setState({ ...state, appointments });
-
     return axios.put(`/api/appointments/${id}`, { interview })
       .then((response) => {
-        setState((prev) => ({ 
-          ...prev, 
-          appointments 
+        setState((prev) => ({
+          ...prev,
+          appointments
         }));
         console.log("RESPONSE from PUT request: ", response);
         console.log("UPDATED STATE: ", state);
