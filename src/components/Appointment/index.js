@@ -14,7 +14,7 @@ import Error from "components/Appointment/Error.js";
 
 export default function Appointment(props) {
 
-  console.log("***PROPS for Appointment = ", props);
+  // console.log("***PROPS for Appointment = ", props);
 
   // mode
   const EMPTY = "EMPTY";
@@ -31,11 +31,6 @@ export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
-
-  // const onEdit = () => transition(EDIT);
-  // const onDelete = () => transition(CONFIRM);
-  // const onConfirm = () => transition(DELETING);
-
 
   const save = (name, interviewer) => {
     if (name && interviewer) {
@@ -122,10 +117,6 @@ export default function Appointment(props) {
           onClose={() => back()}
         />
       )}
-
-      {/* {props.interview ?
-        <Show student={props.interview.student} interviewer={props.interview.interviewer} /> :
-        <Empty />} */}
     </article>
   );
-}
+};

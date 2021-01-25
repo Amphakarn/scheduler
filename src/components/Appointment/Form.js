@@ -17,16 +17,16 @@ export default function Form(props) {
   const reset = () => {
     setName("");
     setInterviewer(null);
-  }
+  };
 
   const cancel = () => {
     reset();
     props.onCancel();
-  }
+  };
 
   const save = () => {
     props.onSave(name, interviewer);
-  }
+  };
 
   
   return (
@@ -57,4 +57,4 @@ export default function Form(props) {
       </section>
     </main>
   )
-}
+};

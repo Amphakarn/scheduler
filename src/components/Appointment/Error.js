@@ -16,4 +16,4 @@ export default function error(props) {
       />
     </main>
   )
-}
+};
