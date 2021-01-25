@@ -20,7 +20,7 @@ export default function Appointment(props) {
   const SHOW = "SHOW";
   const CREATE = "CREATE";
   const SAVING = "SAVING";
-  const DELETEING = "DELETING";
+  const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
 
 
@@ -31,6 +31,8 @@ export default function Appointment(props) {
   const onAdd = () => transition(CREATE);
   const onEdit = () => transition(CREATE);
   const onDelete = () => transition(CONFIRM);
+  const onConfirm = () => transition(DELETING);
+
 
 
   const save = (name, interviewer) => {
@@ -44,9 +46,16 @@ export default function Appointment(props) {
         .then(() => transition(SHOW))
         .catch((err) => console.log(err));
     } else {
-      alert("Please fill in information");
+      alert("Please fill in information"); //to fix
     }
   }
+
+  const destroy = () => {
+    transition(DELETING);
+    props.cancelInterview(props.id)
+      .then(() => transition(EMPTY))
+      .catch((err) => console.log(err));
+  };
 
 
   return (
@@ -59,13 +68,13 @@ export default function Appointment(props) {
       { mode === SAVING &&
         <Status messaging="Saving" />}
 
-      {/* { mode === DELETEING &&
-        <Status messaging="Deleting" />} */}
+      { mode === DELETING &&
+        <Status messaging="Deleting" />}
 
       { mode === SHOW && (
         <Show
-          student={props.interview.student} //correct
-          interviewer={props.interview.interviewer.name} //correct
+          student={props.interview.student}
+          interviewer={props.interview.interviewer.name}
           onEdit={onEdit}
           onDelete={onDelete}
         />
@@ -74,8 +83,8 @@ export default function Appointment(props) {
       { mode === CREATE && (
         <Form
           name={props.interview && props.interview.student}
-          interviewer={props.interviewers.name} // wrong?
-          interviewers={props.interviewers} // wrong?
+          interviewer={props.interviewers.name}
+          interviewers={props.interviewers}
           onCancel={back}
           onSave={save}
         />
@@ -85,7 +94,7 @@ export default function Appointment(props) {
         <Confirm
           message={"Are you sure you would like to delete this interview?"}
           onCancel={back}
-        // onConfirm={}
+          onConfirm={destroy}
         />
       )}
 

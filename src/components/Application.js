@@ -19,7 +19,7 @@ export default function Application(props) {
     appointments: {},
     interviewers: {}
   });
-  console.log("PREV STATE = ", state)
+  console.log("PREV STATE = ", state.appointments[1])
 
   const setDay = day => setState({ ...state, day });
   // const setDays = days => setState((prev) => ({ ...prev, days }));
@@ -42,12 +42,13 @@ export default function Application(props) {
   }, []);
 
   // Book a new appointment
-  const bookInterview = (id, interview) => {
+  const bookInterview = ((id, interview) => {
     // console.log("INTERVIEW = ", interview);
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
+    // console.log("...state.appointments[id]: ", appointments[id])
 
     // Update the existing appointments object with new appointment with the matching appointment id
     const appointments = {
@@ -61,12 +62,29 @@ export default function Application(props) {
           ...prev,
           appointments
         }));
-        console.log("RESPONSE from PUT request: ", response);
-        console.log("UPDATED STATE: ", state);
       });
+  });
 
-    // console.log("***bookInterview =", id, interview);
-  }
+  // Delete an appointment
+  const cancelInterview = ((id) => {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    
+    return axios.delete(`/api/appointments/${id}`)
+    .then ((response) => {
+      setState((prev) => ({
+        ...prev,
+        appointments
+      }));
+    });
+  });
 
 
 
@@ -84,6 +102,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
