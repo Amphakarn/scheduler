@@ -62,7 +62,8 @@ export default function Application(props) {
           ...prev,
           appointments
         }));
-      });
+      })
+      .catch((error) => console.log(error));
   });
 
   // Delete an appointment
@@ -78,12 +79,13 @@ export default function Application(props) {
     };
     
     return axios.delete(`/api/appointments/${id}`)
-    .then ((response) => {
+    .then((response) => {
       setState((prev) => ({
         ...prev,
         appointments
       }));
-    });
+    })
+    .catch((error) => console.log(error));
   });
 
 
