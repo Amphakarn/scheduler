@@ -4,7 +4,7 @@ import Button from "components/Button";
 
 export default function confirm(props) {
 
-  console.log("***PROPS for Confirm= ", props)
+  // console.log("***PROPS for Confirm= ", props)
 
   return (
     <main className="appointment__card appointment__card--confirm">
