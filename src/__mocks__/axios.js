@@ -99,8 +99,8 @@ export default {
         data: fixtures.appointments
       });
     }
-    // added /1 to "/api/appointments/1" inorder to pass the test
-    if (url === "/api/appointments/1") {
+    // added /1 to "/api/appointments/2" inorder to pass the test
+    if (url === "/api/appointments/2") {
       return Promise.resolve({
         status: 204,
         statusText: "No Content",
