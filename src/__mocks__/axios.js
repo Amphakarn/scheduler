@@ -81,9 +81,7 @@ export default {
     }
   }),
 
-  put: jest.fn(url => {
-    console.log("URL = ", url); // for testing
-    
+  put: jest.fn(url => {    
     if (url === "/api/days") {
       return Promise.resolve({
         status: 204,
@@ -99,7 +97,17 @@ export default {
         data: fixtures.appointments
       });
     }
-    // added /1 to "/api/appointments/2" inorder to pass the test
+
+    // added /1 to "/api/appointments/1" inorder to pass the test
+    if (url === "/api/appointments/1") {
+      return Promise.resolve({
+        status: 204,
+        statusText: "No Content",
+        data: fixtures.appointments
+      });
+    }
+
+    // added /2 to "/api/appointments/2" inorder to pass the test
     if (url === "/api/appointments/2") {
       return Promise.resolve({
         status: 204,
@@ -118,8 +126,6 @@ export default {
   }),
 
   delete: jest.fn(url => {
-    console.log("URL = ", url); // for testing
-    
     if (url === "/api/days") {
       return Promise.resolve({
         status: 204,
