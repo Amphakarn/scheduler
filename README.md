@@ -15,23 +15,27 @@ Interview Scheduler is a single-page application that was built using React and 
 
 ## Screenshots
 
-### Main View
+#### Main View
 
 !["Main View"](https://github.com/Amphakarn/scheduler/blob/master/docs/SchedulerMainView.png?raw=true)
 
-### Add New Appointment Form
+
+#### Add New Appointment Form
 
 !["Add New Appointment Form"](https://github.com/Amphakarn/scheduler/blob/master/docs/AddAppointment.png?raw=true)
 
-### Edit or Delete Appointment View (Hover state)
+
+#### Edit or Delete Appointment View (Hover state)
 
 !["Edit or Delete Appointment View (Hover state)"](https://github.com/Amphakarn/scheduler/blob/master/docs/HoverEditDelete.png?raw=true)
 
-### Confirmation Message Upon Delete
+
+#### Confirmation Message Upon Delete
 
 !["Confirmation Message Upon Delete"](https://github.com/Amphakarn/scheduler/blob/master/docs/DeleteConfirmation.png?raw=true)
 
-### Edit Appointment Form
+
+#### Edit Appointment Form
 
 !["Edit Appointment Form"](https://github.com/Amphakarn/scheduler/blob/master/docs/EditAppointment.png?raw=true)
 
@@ -46,7 +50,7 @@ Install dependencies with `npm install`.
 In order to run this application, you have to have two servers running, scheduler API server and scheduler client.
 
 ### Setup API server
-Fork and clone the !["scheduler-api"](https://github.com/lighthouse-labs/scheduler-api) into a **new directory** and follow the README.md instructions.
+Fork and clone the (https://github.com/lighthouse-labs/scheduler-api) into a **new directory** and follow the README.md instructions.
 
 
 ### Running Webpack Development Server
