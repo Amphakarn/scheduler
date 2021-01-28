@@ -13,7 +13,7 @@ export default function useVisualMode(initial) {
     else {
       setHistory(prev => ([...prev, newMode])); // add new mode to history      
     }
-  }
+  };
 
   const back = () => {
     if (history.length > 1) {
@@ -24,7 +24,7 @@ export default function useVisualMode(initial) {
       setMode(history[0]);
       setHistory(mode);
     }
-  }
+  };
 
   return { mode, transition, back };
-}
+};

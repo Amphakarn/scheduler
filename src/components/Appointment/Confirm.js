@@ -4,8 +4,6 @@ import Button from "components/Button";
 
 export default function confirm(props) {
 
-  // console.log("***PROPS for Confirm= ", props)
-
   return (
     <main className="appointment__card appointment__card--confirm">
       <h1 className="text--semi-bold">{props.message}</h1>
@@ -14,5 +12,5 @@ export default function confirm(props) {
         <Button danger onClick={props.onConfirm}>Confirm</Button>
       </section>
     </main>
-  )
-}
+  );
+};

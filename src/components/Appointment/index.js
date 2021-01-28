@@ -14,8 +14,6 @@ import Error from "components/Appointment/Error.js";
 
 export default function Appointment(props) {
 
-  // console.log("***PROPS for Appointment = ", props);
-
   // mode
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
@@ -42,9 +40,9 @@ export default function Appointment(props) {
       props.bookInterview(props.id, interview) //props.id --> appointment id
         .then(() => transition(SHOW))
         .catch((error) => transition(ERROR_SAVE, true));
-    } 
+    }
     else {
-      alert("Please fill in information"); //to fix
+      alert("Please fill in information");
     }
   };
 
@@ -66,36 +64,35 @@ export default function Appointment(props) {
       { mode === SAVING &&
         <Status message="Saving" />}
 
-
       { mode === DELETING &&
         <Status message="Deleting" />}
 
       { mode === SHOW && (
         <Show
-        student={props.interview.student}
-        interviewer={props.interview.interviewer.name}
-        onEdit={() => transition(EDIT)}
-        onDelete={() => transition(CONFIRM)}
+          student={props.interview.student}
+          interviewer={props.interview.interviewer.name}
+          onEdit={() => transition(EDIT)}
+          onDelete={() => transition(CONFIRM)}
         />
       )}
 
       { mode === CREATE && (
         <Form
-        interviewers={props.interviewers}
-        onCancel={back}
-        onSave={save}
+          interviewers={props.interviewers}
+          onCancel={back}
+          onSave={save}
         />
       )}
 
       { mode === EDIT && (
         <Form
-        name={props.interview && props.interview.student}
-        interviewer={props.interview && props.interview.interviewer.id}
-        interviewers={props.interviewers}
-        onCancel={back}
-        onSave={save}
+          name={props.interview && props.interview.student}
+          interviewer={props.interview && props.interview.interviewer.id}
+          interviewers={props.interviewers}
+          onCancel={back}
+          onSave={save}
         />
-      )}  
+      )}
 
       { mode === CONFIRM && (
         <Confirm
