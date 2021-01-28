@@ -42,19 +42,20 @@ Interview Scheduler is a single-page application that was built using React and 
 
 ### Setup
 
-Install dependencies with `npm install`.
-
-In order to run this application, you have to have two servers running, scheduler API server and scheduler client.
+In order to run this application, you have to have two servers running, scheduler server (scheduler-api) and scheduler client. 
+The API server runs on port 8001, and the client runs on port 8000.
 
 ### Setup API server
-Fork and clone the ["scheduler-api"](https://github.com/lighthouse-labs/scheduler-api) into a **new directory** and follow the README.md instructions.
+
+Fork and clone the [scheduler-api](https://github.com/lighthouse-labs/scheduler-api) into a **new directory** and follow the README.md instructions.
 
 
 ### Running Webpack Development Server
 
-```sh
-npm start
-```
+From the root directory of the project, execute the following commands:
+1) Install dependencies with `npm install`.
+2) Run `npm start`
+3) Visit http://localhost:8000 in the browser
 
 ### Running Jest Test Framework
 
